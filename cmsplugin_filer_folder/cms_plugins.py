@@ -8,7 +8,7 @@ from .conf import settings
 from filer.models.filemodels import File
 from filer.models.foldermodels import Folder
 from filer.models.abstract import BaseImage
-
+from filer import settings as filer_settings
 
 class FilerFolderPlugin(CMSPluginBase):
     module = 'Filer'
@@ -27,14 +27,14 @@ class FilerFolderPlugin(CMSPluginBase):
 
     def get_folder_files(self, folder, user):
         qs_files = folder.files.not_instance_of(BaseImage)
-        if user.is_staff:
+        if user.is_staff or filer_settings.FILER_ENABLE_PERMISSIONS:
             return qs_files
         else:
             return qs_files.filter(is_public=True)
 
     def get_folder_images(self, folder, user):
         qs_files = folder.files.instance_of(BaseImage)
-        if user.is_staff:
+        if user.is_staff or filer_settings.FILER_ENABLE_PERMISSIONS:
             return qs_files
         else:
             return qs_files.filter(is_public=True)
