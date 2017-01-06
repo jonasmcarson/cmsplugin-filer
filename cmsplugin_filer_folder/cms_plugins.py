@@ -16,7 +16,7 @@ class FilerFolderPlugin(CMSPluginBase):
     name = _("Folder")
     TEMPLATE_NAME = 'cmsplugin_filer_folder/plugins/folder/%s.html'
     render_template = TEMPLATE_NAME % 'default'
-    text_enabled = False
+    text_enabled = True
     admin_preview = False
 
     fieldsets = (
